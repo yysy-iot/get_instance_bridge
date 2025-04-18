@@ -1,7 +1,7 @@
 package com.yueying.get_instance_bridge.instances
 
 import com.yueying.get_instance_bridge.utils.FlutterRequestError
-import com.yueying.get_instance_bridge.utils.error
+import com.yueying.get_instance_bridge.utils.onError
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -126,7 +126,7 @@ class InstancesManager private constructor() : MethodChannel.MethodCallHandler {
         val typeName = components[1]
         val instance = find(typeName, hashCode)
         if (instance == null) {
-            result.error(FlutterRequestError.invalidObject)
+            result.onError(FlutterRequestError.invalidObject)
             return
         }
         instance.callMethod(components[3], arguments, result)

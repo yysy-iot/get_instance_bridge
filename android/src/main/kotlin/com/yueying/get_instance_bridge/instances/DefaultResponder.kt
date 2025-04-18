@@ -2,6 +2,7 @@ package com.yueying.get_instance_bridge.instances
 
 import com.yueying.get_instance_bridge.LifecycleReference
 import com.yueying.get_instance_bridge.instances.handler.AnyMixCallHandler
+import com.yueying.get_instance_bridge.utils.onError
 import io.flutter.plugin.common.MethodChannel
 
 abstract class DefaultResponder : FlutterResponder, LifecycleReference.Referent {
@@ -21,9 +22,7 @@ abstract class DefaultResponder : FlutterResponder, LifecycleReference.Referent 
                 success(response)
             }
         }, {
-            result.runCatching {
-                error(it)
-            }
+            result.onError(it)
         })
     }
 
