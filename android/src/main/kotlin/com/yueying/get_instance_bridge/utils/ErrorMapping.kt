@@ -32,7 +32,7 @@ fun Throwable.errorDetails(): Map<String, Any> {
 }
 
 ///
-internal fun MethodChannel.Result.onError(error: Throwable) {
+fun MethodChannel.Result.onError(error: Throwable) {
     runCatching {
         error(error.getCode(), error.message, error.errorDetails())
     }
