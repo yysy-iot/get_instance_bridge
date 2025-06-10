@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'get_instance_bridge'
-  s.version          = '0.0.1'
+  s.version          = '0.0.2'
   s.summary          = 'Flutter plugin bridge.'
   s.description      = <<-DESC
 A plugin bridge for managing instances.
@@ -17,10 +17,10 @@ A plugin bridge for managing instances.
 
   s.source_files = 'Classes/**/*'
   # ✅ 平台设置
-  s.platform = :osx, '10.11'
+  s.platform = :osx, '10.15'
   # ✅ 依赖
   s.osx.dependency 'FlutterMacOS'
-  s.dependency 'instance_bridge_core', '~> 0.0.4'
+  s.dependency 'instance_bridge_core', '~> 0.0.7'
 
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   # ✅ Swift 支持（如果有 Swift 文件）

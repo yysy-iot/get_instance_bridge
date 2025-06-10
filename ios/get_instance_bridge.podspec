@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'get_instance_bridge'
-  s.version          = '0.0.1'
+  s.version          = '0.0.2'
   s.summary          = 'Flutter plugin bridge.'
   s.description      = <<-DESC
 A plugin bridge for managing instances.
@@ -17,10 +17,10 @@ A plugin bridge for managing instances.
 
   s.source_files = 'Classes/**/*'
   # ✅ 平台设置
-  s.platform = :ios, '12.0'
+  s.platform = :ios, '13.0'
   # ✅ 依赖
   s.ios.dependency 'Flutter'
-  s.dependency 'instance_bridge_core', '~> 0.0.4'
+  s.dependency 'instance_bridge_core', '~> 0.0.7'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
