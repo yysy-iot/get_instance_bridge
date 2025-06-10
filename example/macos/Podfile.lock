@@ -1,0 +1,35 @@
+PODS:
+  - FlutterMacOS (1.0.0)
+  - get_instance_bridge (0.0.1):
+    - FlutterMacOS
+    - instance_bridge_core (~> 0.0.3)
+  - instance_bridge_core (0.0.3):
+    - Flutter
+    - FlutterMacOS
+
+DEPENDENCIES:
+  - FlutterMacOS (from `Flutter/ephemeral`)
+  - get_instance_bridge (from `Flutter/ephemeral/.symlinks/plugins/get_instance_bridge/macos`)
+  - instance_bridge_core (from `https://github.com/yysy-iot/instance_bridge_core.git`)
+
+EXTERNAL SOURCES:
+  FlutterMacOS:
+    :path: Flutter/ephemeral
+  get_instance_bridge:
+    :path: Flutter/ephemeral/.symlinks/plugins/get_instance_bridge/macos
+  instance_bridge_core:
+    :git: https://github.com/yysy-iot/instance_bridge_core.git
+
+CHECKOUT OPTIONS:
+  instance_bridge_core:
+    :commit: bcf7552b06b862a4a7a6841378cdbd2d2ef5a20d
+    :git: https://github.com/yysy-iot/instance_bridge_core.git
+
+SPEC CHECKSUMS:
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  get_instance_bridge: a4b72bd8cb232f9b6933bd47122a38034c78041f
+  instance_bridge_core: 1d135a37e39ff9d767a2c440cc8e34ed3a131cbd
+
+PODFILE CHECKSUM: be95df4f0352f8e4f6a2a7686c4c710192b06e89
+
+COCOAPODS: 1.16.2

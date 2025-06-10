@@ -1,0 +1,41 @@
+PODS:
+  - Flutter (1.0.0)
+  - get_instance_bridge (0.0.1):
+    - Flutter
+    - instance_bridge_core (~> 0.0.3)
+  - instance_bridge_core (0.0.3):
+    - Flutter
+    - FlutterMacOS
+  - integration_test (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - get_instance_bridge (from `.symlinks/plugins/get_instance_bridge/ios`)
+  - instance_bridge_core (from `https://github.com/yysy-iot/instance_bridge_core.git`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  get_instance_bridge:
+    :path: ".symlinks/plugins/get_instance_bridge/ios"
+  instance_bridge_core:
+    :git: https://github.com/yysy-iot/instance_bridge_core.git
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+
+CHECKOUT OPTIONS:
+  instance_bridge_core:
+    :commit: bcf7552b06b862a4a7a6841378cdbd2d2ef5a20d
+    :git: https://github.com/yysy-iot/instance_bridge_core.git
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  get_instance_bridge: ed92e7889b25c5a9df931c358718a68719dcf879
+  instance_bridge_core: 1d135a37e39ff9d767a2c440cc8e34ed3a131cbd
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
+
+PODFILE CHECKSUM: d82eedd5cd45a95ee5af44bfa55cca39889b396a
+
+COCOAPODS: 1.16.2
