@@ -1,3 +1,7 @@
+## [0.0.4] - 2025-05-03
+
+- feat: macOS 10.15 iOS 13
+
 ## [0.0.3] - 2025-05-03
 
 - feat: android open MethodChannel.Result.onError
