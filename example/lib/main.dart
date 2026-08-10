@@ -54,6 +54,10 @@ class TestRepository extends MixService {
   @override
   String get typeName => "TestRepository";
 
+  ///
+  /// 初始化参数，传递给原生侧的构造函数
+  /// 示例中传递字符串 "2" 作为演示
+  ///
   @override
   get initArguments => "2";
 

@@ -26,7 +26,7 @@ private fun Throwable.toMap(): Map<String, Any?> {
 fun Throwable.errorDetails(): Map<String, Any> {
     val mutableMap = mutableMapOf<String, Any>("domain" to getDomain())
     cause?.apply {
-        mutableMap["NSUnderlyingErrorKey"] = toMap()
+        mutableMap["cause"] = toMap()
     }
     return mutableMap
 }

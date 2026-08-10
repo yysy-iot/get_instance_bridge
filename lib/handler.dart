@@ -16,7 +16,7 @@ class NativeMethodHandler<T> {
         asFunc: asFunc,
         handler: (value) => value != null
             ? handler(value)
-            : Future.error("no such arguments type error"),
+            : Future.error(ArgumentError('Argument is null for method handler')),
       );
 
   factory NativeMethodHandler.optional(Future Function(T?) handler,

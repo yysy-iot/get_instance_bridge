@@ -26,13 +26,15 @@ abstract class MixCallHandler<T, R : Any> internal constructor(
             resultAdapter: JsonAdapter<R>,
             handler: (argument: T, success: (R?) -> Unit, failure: (Throwable) -> Unit) -> Unit
         ): ((T, (Any?) -> Unit, (Throwable) -> Unit) -> Unit) = { argument, success, failure ->
-            handler(argument, {
-                if (it == null) {
+            handler(argument, { result ->
+                if (result == null) {
                     success(null)
                 } else {
-                    runCatching {
-                        resultAdapter.toJsonValue(it)
-                    }.onFailure(failure).onSuccess(success)
+                    try {
+                        success(resultAdapter.toJsonValue(result))
+                    } catch (e: Exception) {
+                        failure(e)
+                    }
                 }
             }, failure)
         }

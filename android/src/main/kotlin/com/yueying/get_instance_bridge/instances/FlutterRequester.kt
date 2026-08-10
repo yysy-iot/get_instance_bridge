@@ -5,8 +5,6 @@ import com.yueying.get_instance_bridge.utils.FlutterRequestError
 import com.yueying.get_instance_bridge.utils.errorDetails
 import com.yueying.get_instance_bridge.utils.getCode
 import io.flutter.plugin.common.MethodChannel
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
 interface FlutterRequester {
 
@@ -95,12 +93,13 @@ interface FlutterRequester {
         val channel = InstancesManager.getChannel()
         //
         if (channel == null) {
-            onError?.let {
-                MainScope().launch {
-                    val error = FlutterRequestError.invalidObject
-                    it(error.getCode(), error.localizedMessage, error.errorDetails())
-                }
-            }
+            // channel 已销毁（如 onDetachedFromEngine 后），直接回调错误
+            // 不使用 MainScope 避免协程泄漏
+            onError?.invoke(
+                FlutterRequestError.invalidObject.getCode(),
+                FlutterRequestError.invalidObject.localizedMessage,
+                FlutterRequestError.invalidObject.errorDetails()
+            )
             return
         }
         //

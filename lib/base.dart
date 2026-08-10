@@ -1,12 +1,18 @@
-// import 'package:get/route_manager.dart';
-import 'package:get/state_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'handler.dart';
 import 'instance.dart';
+import 'service.dart';
 export 'instance.dart';
+export 'service.dart';
 
 ///
-abstract class MixService extends GetxService with MixInstance, _MixDisposable {
+/// 服务基类，替代原 GetX 版本（原继承 GetxService）。
+///
+/// 提供：
+/// - [MixInstance] 桥接能力（原生实例双向绑定）
+/// - 生命周期管理（[onInit]/[onReady]/[onClose]）
+/// - 自动初始化/销毁 Mix 实例
+abstract class MixService extends MixLifecycle with MixInstance, _MixDisposable {
   @mustCallSuper
   @override
   void onClose() {
@@ -19,7 +25,7 @@ abstract class MixService extends GetxService with MixInstance, _MixDisposable {
 }
 
 ///
-mixin _MixDisposable on DisposableInterface, MixInstance {
+mixin _MixDisposable on MixLifecycle, MixInstance {
   @override
   get initArguments => null;
 

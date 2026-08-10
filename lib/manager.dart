@@ -17,7 +17,12 @@ class InstancesManager {
   static final shared = InstancesManager._();
   InstancesManager._() {
     if (kDebugMode) {
-      _channel.invokeMethod("cleanCaches").then((_) => _initCompleter.complete());
+      // 使用 whenComplete 确保即使 cleanCaches 失败也能完成初始化，避免 debug 模式下所有调用超时
+      _channel.invokeMethod("cleanCaches").whenComplete(() {
+        if (!_initCompleter.isCompleted) {
+          _initCompleter.complete();
+        }
+      });
     }
   }
 
@@ -64,9 +69,7 @@ class InstancesManager {
       ).onError(
         (error, stack) {
           final dynamic obj;
-          if (error == null) {
-            obj = method;
-          } else if (error is PlatformException) {
+          if (error is PlatformException) {
             final String stacktrace;
             if (error.stacktrace != null) {
               stacktrace = "$method\n${error.stacktrace!}";
@@ -88,7 +91,7 @@ class InstancesManager {
 
   //////////////////////////////////
   ///
-  String _key(String typeName, int hashCode) => "$typeName$hashCode";
+  String _key(String typeName, int hashCode) => "${typeName}_$hashCode";
 
   ///
   Future _callHandler(MethodCall call) {
@@ -103,7 +106,8 @@ class InstancesManager {
     final key = _key(components[1], code);
     final instance = _cachesMap[key];
     if (instance == null) {
-      return Future.error(const StackOverflowError());
+      debugPrint('MixInstance not found: ${components[1]}#$code');
+      return Future.error(StateError('MixInstance not found: ${components[1]}#$code'));
     }
     return instance.callHandler(components[3], call.arguments);
   }
@@ -112,7 +116,11 @@ class InstancesManager {
   Future<T> _synchronized<T>(FutureOr<T> Function() computation, {Duration? timeout}) async {
     if (kDebugMode) {
       // 等待初始化完成
-      await _initCompleter.future.timeout(const Duration(seconds: 120));
+      try {
+        await _initCompleter.future.timeout(const Duration(seconds: 120));
+      } on TimeoutException {
+        debugPrint('InstancesManager: cleanCaches 初始化超时，继续执行（原生侧可能未实现 cleanCaches）');
+      }
     }
     return await computation();
   }

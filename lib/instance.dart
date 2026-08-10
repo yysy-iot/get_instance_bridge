@@ -51,18 +51,23 @@ mixin MixInstance {
   @protected
   @mustCallSuper
   Future<void> disposeMixInstance() async {
-    assert(_status != MixInstanceStatus.dispose,
-        'Once you have called dispose() on a MixInstance $typeName, it can no longer be used.');
-    //  'Once you have called dispose() on a MixInstance $typeName, it can no longer be used.');
     if (_status == MixInstanceStatus.dispose) return;
-    //  if the instance is not loaded, we can dispose it immediately
+    // 如果实例未初始化，直接标记为 dispose，无需通知原生侧
     if (_status == MixInstanceStatus.none) {
       _status = MixInstanceStatus.dispose;
       return;
     }
-    // if the instance is loading, we need to wait for it to finish loading
-    await _waitInit();
-    // if the instance is loaded, we can dispose it
+    // 如果实例正在加载，等待初始化完成（或失败）
+    if (_status == MixInstanceStatus.loading) {
+      try {
+        await _waitInit();
+      } catch (e) {
+        // 初始化失败，直接标记为 dispose，跳过原生销毁（原生侧可能未成功创建）
+        _status = MixInstanceStatus.dispose;
+        return;
+      }
+    }
+    // 实例已加载，执行销毁
     _status = MixInstanceStatus.dispose;
     await _manager.disposeMixInstance(
       typeName,
@@ -89,14 +94,15 @@ mixin MixInstance {
 
   ///
   Future<T?> _invokeMethod<T>(String method, dynamic arguments) async {
-    assert(_status != MixInstanceStatus.dispose, 'MixInstance $typeName $method was used after being disposed.');
-    //
+    // release 模式下 assert 被跳过，需要显式检查
+    if (_status == MixInstanceStatus.dispose) {
+      return Future.error(StateError('MixInstance $typeName.$method was used after being disposed.'));
+    }
     if (_status == MixInstanceStatus.none) {
       await initMixInstance();
     } else {
       await _waitInit();
     }
-    //
     final argv = arguments is Encodable ? arguments.toMap() : arguments;
     final methodNameStr = "method.$typeName.$hashCode.$method";
     return await _manager.invokeMethod<T>(

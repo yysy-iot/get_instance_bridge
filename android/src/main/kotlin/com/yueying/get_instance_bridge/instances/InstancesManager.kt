@@ -107,7 +107,12 @@ class InstancesManager private constructor() : MethodChannel.MethodCallHandler {
         if (instance != null) return instance
         val constructor = builderMap[typeName] ?: return null
         val newI = constructor(hashCode.toLong(), arguments)
-        cachesMap[key] = newI
+        // 使用 synchronized 保护 cachesMap 写操作，防止跨线程竞态
+        synchronized(this) {
+            // 双重检查：可能在等待锁期间已被其他线程创建
+            cachesMap[key]?.let { return it }
+            cachesMap[key] = newI
+        }
         return newI
     }
 
@@ -145,8 +150,11 @@ class InstancesManager private constructor() : MethodChannel.MethodCallHandler {
         runCatching {
             while (iterator.hasNext()) {
                 val item = iterator.next()
+                // 精确匹配：确保不会误删前缀相同的其他类型实例
+                // 例如 unregister("A") 不会误删 "A_B" 的实例
                 val need = if (typeName != null) {
-                    item.key.startsWith(typeName + "_")
+                    val parts = item.key.split("_")
+                    parts.size == 2 && parts[0] == typeName
                 } else {
                     true
                 }
@@ -175,7 +183,7 @@ class InstancesManager private constructor() : MethodChannel.MethodCallHandler {
             instance(call.arguments, result)
         } else if (call.method == "destroy") {
             destroy(call.arguments, result)
-        } else if (call.method.startsWith("method")) {
+        } else if (call.method.startsWith("method.")) {
             method(call.method, call.arguments, result)
         } else if (call.method == "cleanCaches") {
             destroyCaches()
