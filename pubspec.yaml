@@ -1,16 +1,21 @@
 name: get_instance_bridge
 description: "A cross-platform instance binding plugin that enables communication between native and Dart."
-version: 0.1.0
+version: 0.1.2
 homepage: https://github.com/yysy-iot
 repository: https://github.com/yysy-iot/get_instance_bridge
 
 environment:
   sdk: ^3.7.2
-  flutter: '>=3.3.0'
+  flutter: '>=3.44.0'
 
 dependencies:
   flutter:
     sdk: flutter
+  # instance_bridge_core 是纯 iOS/macOS 原生共享库，通过 CocoaPods 分发（trunk 上 0.0.15），
+  # 同时发布到 pub.dev（hosted）。这里声明为插件依赖，用于 iOS/macOS 原生集成；
+  # CocoaPods 模式由 podspec 的 s.dependency 'instance_bridge_core', '~> 0.0.15' 拉取。
+  # SPM 模式下，插件间 path 依赖仍受 Flutter 工具链限制（见 ios/macos Package.swift 注释）。
+  instance_bridge_core: ^0.0.15
 
 dev_dependencies:
   flutter_test:

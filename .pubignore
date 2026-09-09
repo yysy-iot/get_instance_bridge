@@ -1,0 +1,19 @@
+# pub.dev 发布时忽略本地构建产物与锁文件。
+pubspec.lock
+.dart_tool/
+build/
+.DS_Store
+example/.dart_tool/
+example/build/
+example/ios/Pods/
+example/macos/Pods/
+example/ios/Flutter/ephemeral/
+example/macos/Flutter/ephemeral/
+ios/get_instance_bridge/.build/
+macos/get_instance_bridge/.build/
+# SPM 变通符号链接：解引用后会把 core 源码打进包，必须排除
+ios/instance_bridge_core/
+macos/instance_bridge_core/
+docs/
+AGENTS.md
+*.iml

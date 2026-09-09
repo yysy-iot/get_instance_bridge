@@ -31,3 +31,7 @@ migrate_working_dir/
 .flutter-plugins
 .flutter-plugins-dependencies
 build/
+
+# SPM 变通：本地构建时指向 pub-cache core 副本的符号链接（见 ios/macos Package.swift 注释 #188646）
+/ios/instance_bridge_core
+/macos/instance_bridge_core

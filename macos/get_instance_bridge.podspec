@@ -15,12 +15,12 @@ A plugin bridge for managing instances.
 
   s.source           = { :path => '.' }
 
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'get_instance_bridge/Sources/get_instance_bridge/**/*.swift'
   # ✅ 平台设置
   s.platform = :osx, '10.15'
   # ✅ 依赖
   s.osx.dependency 'FlutterMacOS'
-  s.dependency 'instance_bridge_core', '~> 0.0.8'
+  s.dependency 'instance_bridge_core', '~> 0.0.15'
 
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   # ✅ Swift 支持（如果有 Swift 文件）
@@ -30,5 +30,5 @@ A plugin bridge for managing instances.
   # required reason APIs, update the PrivacyInfo.xcprivacy file to describe your
   # plugin's privacy impact, and then uncomment this line. For more information,
   # see https://developer.apple.com/documentation/bundleresources/privacy_manifest_files
-  # s.resource_bundles = {'get_instance_bridge_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
+  # s.resource_bundles = {'get_instance_bridge_privacy' => ['get_instance_bridge/Sources/get_instance_bridge/PrivacyInfo.xcprivacy']}
 end

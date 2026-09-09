@@ -1,3 +1,16 @@
+## [0.1.2] - 2026-09-09
+
+- 升级 `instance_bridge_core` 至 0.0.15（`^0.0.15` / podspec `~> 0.0.15`），含 Swift 6 并发支持：`HashInstance`/`ObjInstance` 标注 `@unchecked Sendable`
+- iOS/macOS 构建切换 Swift Package Manager 为主轨（`flutter config --enable-swift-package-manager`），example iOS/macOS SPM 构建验证通过
+- SPM 变通：ios/ 与 macos/ 下指向 pub-cache `instance_bridge_core` 副本的符号链接（工具链 #188646 path 依赖 bug），已加入 .gitignore
+
+## [0.1.1] - 2026-09-09
+
+- iOS/macOS 声明 `instance_bridge_core: ^0.0.10` 插件依赖，podspec 保持 `~> 0.0.10`
+- iOS/macOS 原生源码迁移到 SwiftPM 风格目录并新增 `Package.swift`（实验性）
+- 明确 CocoaPods 为主轨；SPM 插件间 `path` 依赖仍受 Flutter 工具链限制
+- 环境要求更新为 `flutter: '>=3.44.0'`
+
 ## [0.1.0] - 2026-08-10
 
 ### Breaking Changes
