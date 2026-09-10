@@ -1,3 +1,9 @@
+## [0.1.4] - 2026-09-11
+
+- 修复 debug 模式下 `cleanCaches` 调用失败导致后续所有 MethodChannel 调用卡住的问题：
+  - 构造函数改用 `Future.microtask` + `try-catch`，异常静默忽略（原生端可能未实现 `cleanCaches`）
+  - `_synchronized` 等待初始化超时从 120s 缩短为 5s，超时/异常后主动完成 `_initCompleter`，避免后续调用持续等待
+
 ## [0.1.3] - 2026-09-10
 
 - 升级 `instance_bridge_core` 至 0.0.17（`^0.0.17` / podspec `~> 0.0.17`），同步 `@Sendable` 协议破坏性变更

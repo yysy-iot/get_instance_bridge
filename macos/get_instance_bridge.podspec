@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'get_instance_bridge'
-  s.version          = '0.1.3'
+  s.version          = '0.1.4'
   s.summary          = 'Flutter plugin bridge.'
   s.description      = <<-DESC
 A plugin bridge for managing instances.

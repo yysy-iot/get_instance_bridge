@@ -17,12 +17,20 @@ class InstancesManager {
   static final shared = InstancesManager._();
   InstancesManager._() {
     if (kDebugMode) {
-      // 使用 whenComplete 确保即使 cleanCaches 失败也能完成初始化，避免 debug 模式下所有调用超时
-      _channel.invokeMethod("cleanCaches").whenComplete(() {
+      // 使用 Future.microtask 确保异常在微任务中处理，不阻塞构造函数或被 Zone 捕获
+      Future.microtask(() async {
+        try {
+          await _channel.invokeMethod("cleanCaches");
+        } catch (_) {
+          // 静默忽略（原生端可能未实现 cleanCaches）
+        }
         if (!_initCompleter.isCompleted) {
           _initCompleter.complete();
         }
       });
+    } else {
+      // 非 debug 模式直接完成，保持逻辑一致性
+      _initCompleter.complete();
     }
   }
 
@@ -115,11 +123,20 @@ class InstancesManager {
   ///
   Future<T> _synchronized<T>(FutureOr<T> Function() computation, {Duration? timeout}) async {
     if (kDebugMode) {
-      // 等待初始化完成
+      // 等待初始化完成，缩短超时时间避免长时间卡住
       try {
-        await _initCompleter.future.timeout(const Duration(seconds: 120));
+        await _initCompleter.future.timeout(const Duration(seconds: 5));
       } on TimeoutException {
-        debugPrint('InstancesManager: cleanCaches 初始化超时，继续执行（原生侧可能未实现 cleanCaches）');
+        debugPrint('InstancesManager: cleanCaches 初始化超时（5秒），继续执行');
+        // 超时后主动完成，避免后续调用继续等待
+        if (!_initCompleter.isCompleted) {
+          _initCompleter.complete();
+        }
+      } catch (_) {
+        // 捕获其他异常，避免调试器卡住
+        if (!_initCompleter.isCompleted) {
+          _initCompleter.complete();
+        }
       }
     }
     return await computation();
