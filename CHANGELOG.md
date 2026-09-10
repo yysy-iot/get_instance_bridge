@@ -1,3 +1,10 @@
+## [0.1.3] - 2026-09-10
+
+- 升级 `instance_bridge_core` 至 0.0.17（`^0.0.17` / podspec `~> 0.0.17`），同步 `@Sendable` 协议破坏性变更
+- `example/ios/Runner/TestRepository.swift` 的 `MixCallHandler` 闭包补 `@Sendable`
+- 移除 example Podfile 中 stale 的 `instance_bridge_core` git 依赖（tag 0.0.8），改用 Flutter symlink 插件源
+- 移除 example iOS `project.pbxproj` 中失效的 `get_instance_bridge` SPM 本地包引用（CocoaPods 为主轨）
+
 ## [0.1.2] - 2026-09-09
 
 - 升级 `instance_bridge_core` 至 0.0.15（`^0.0.15` / podspec `~> 0.0.15`），含 Swift 6 并发支持：`HashInstance`/`ObjInstance` 标注 `@unchecked Sendable`

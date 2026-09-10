@@ -1,16 +1,19 @@
 PODS:
   - Flutter (1.0.0)
-  - get_instance_bridge (0.0.2):
+  - get_instance_bridge (0.1.0):
     - Flutter
-    - instance_bridge_core (~> 0.0.8)
-  - instance_bridge_core (0.0.8):
+    - instance_bridge_core (~> 0.0.17)
+  - instance_bridge_core (0.0.17):
     - Flutter
     - FlutterMacOS
+  - integration_test (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - get_instance_bridge (from `.symlinks/plugins/get_instance_bridge/ios`)
-  - instance_bridge_core (from `https://github.com/yysy-iot/instance_bridge_core.git`, tag `0.0.8`)
+  - instance_bridge_core (from `.symlinks/plugins/instance_bridge_core/darwin`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
@@ -18,19 +21,16 @@ EXTERNAL SOURCES:
   get_instance_bridge:
     :path: ".symlinks/plugins/get_instance_bridge/ios"
   instance_bridge_core:
-    :git: https://github.com/yysy-iot/instance_bridge_core.git
-    :tag: 0.0.8
-
-CHECKOUT OPTIONS:
-  instance_bridge_core:
-    :git: https://github.com/yysy-iot/instance_bridge_core.git
-    :tag: 0.0.8
+    :path: ".symlinks/plugins/instance_bridge_core/darwin"
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  get_instance_bridge: 3a8724b8fbb6250b3835bf98a1f22b445bf3005f
-  instance_bridge_core: c43d4fa1882349a32a66395afc9a98ca50a3fbc4
+  Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
+  get_instance_bridge: 7dd937590bf2110d4b0f253afcecd8dfde69a0b2
+  instance_bridge_core: b1e3fa7f53eb55087ad4470c435fb297b304080a
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
 
-PODFILE CHECKSUM: b5535afb508175c087ec99c47bf47d22bdf953ad
+PODFILE CHECKSUM: 53a6aebc29ccee84c41f92f409fc20cd4ca011f1
 
 COCOAPODS: 1.17.0

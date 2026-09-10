@@ -17,7 +17,7 @@ final class TestRepository: DefaultResponder {
     subscript(method: String) -> (any AnyMixCallHandler)? {
         switch method {
         case "id":
-            return MixCallHandler { [unowned self] success, _ in
+            return MixCallHandler { @Sendable [unowned self] success, _ in
                 success(id)
             }
         default:
