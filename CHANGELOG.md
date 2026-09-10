@@ -1,3 +1,9 @@
+## [0.1.5] - 2026-09-11
+
+- 修复 `MixInstance._invokeMethod` 的 TOCTOU 竞态：`await _waitInit()` / `await initMixInstance()` 恢复后未复查 `_status`，期间若实例被并发 dispose 仍会发送原生调用 → 原生 `find(hash)` 失败返回 405
+  - `_invokeMethod` 在 await 后复查 `_status == dispose`，命中则直接返回 `StateError`，不再发原生通道
+  - `disposeMixInstance` 在 `await _waitInit()` 后复查 `_status`，防止并发 dispose 重复销毁
+
 ## [0.1.4] - 2026-09-11
 
 - 修复 debug 模式下 `cleanCaches` 调用失败导致后续所有 MethodChannel 调用卡住的问题：

@@ -1,6 +1,6 @@
 name: get_instance_bridge
 description: "A cross-platform instance binding plugin that enables communication between native and Dart."
-version: 0.1.4
+version: 0.1.5
 homepage: https://github.com/yysy-iot
 repository: https://github.com/yysy-iot/get_instance_bridge
 

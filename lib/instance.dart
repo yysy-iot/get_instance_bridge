@@ -67,6 +67,8 @@ mixin MixInstance {
         return;
       }
     }
+    // await 后复查 _status，防止并发 dispose 导致重复销毁
+    if (_status == MixInstanceStatus.dispose) return;
     // 实例已加载，执行销毁
     _status = MixInstanceStatus.dispose;
     await _manager.disposeMixInstance(
@@ -102,6 +104,10 @@ mixin MixInstance {
       await initMixInstance();
     } else {
       await _waitInit();
+    }
+    // await 后复查 _status，防止 TOCTOU 竞态（await 期间可能被并发 dispose）
+    if (_status == MixInstanceStatus.dispose) {
+      return Future.error(StateError('MixInstance $typeName.$method was disposed while calling.'));
     }
     final argv = arguments is Encodable ? arguments.toMap() : arguments;
     final methodNameStr = "method.$typeName.$hashCode.$method";
